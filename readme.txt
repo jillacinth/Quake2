@@ -12,7 +12,6 @@ Powerups:
 Press E for ammo (200 credits) 
 Press F for freeze (750 credits)
 Press i for doubler (1000 credits)
-Press F for freeze (750 credits)
 Press Q for Quad Damage (300 credits)
 Press J for silencer (300 credits)
 Press K for Invulnerability (1000 credits)
