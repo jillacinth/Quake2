@@ -607,6 +607,10 @@ but is called after each death and level change in deathmatch
 void InitClientPersistant (gclient_t *client)
 {
 	gitem_t		*item;
+	gitem_t		*item2;
+	//edict_t		*self;
+
+	//	self = client;
 
 	memset (&client->pers, 0, sizeof(client->pers));
 
@@ -616,8 +620,19 @@ void InitClientPersistant (gclient_t *client)
 
 	client->pers.weapon = item;
 
+	item2 = FindItem("Shotgun");
+
+	client->pers.selected_item = ITEM_INDEX(item2);
+	client->pers.inventory[client->pers.selected_item] = 2;
+
+	//Add_Ammo(self, "Shotgun", 10);
+	//self->money = 0;
+
 	client->pers.health			= 100;
 	client->pers.max_health		= 100;
+	client->pers.money			= 300;
+	client->pers.doubler		= 0;
+	client->pers.freeze			= 0;
 
 	client->pers.max_bullets	= 200;
 	client->pers.max_shells		= 100;
@@ -658,6 +673,9 @@ void SaveClientData (void)
 		if (!ent->inuse)
 			continue;
 		game.clients[i].pers.health = ent->health;
+		game.clients[i].pers.money = ent->money;
+		game.clients[i].pers.doubler = ent->doubler;
+		game.clients[i].pers.freeze = ent->freeze;
 		game.clients[i].pers.max_health = ent->max_health;
 		game.clients[i].pers.savedFlags = (ent->flags & (FL_GODMODE|FL_NOTARGET|FL_POWER_ARMOR));
 		if (coop->value)
@@ -669,6 +687,9 @@ void FetchClientEntData (edict_t *ent)
 {
 	ent->health = ent->client->pers.health;
 	ent->max_health = ent->client->pers.max_health;
+	ent->money = ent->client->pers.money;
+	ent->doubler = ent->client->pers.doubler;
+	ent->freeze = ent->client->pers.freeze;
 	ent->flags |= ent->client->pers.savedFlags;
 	if (coop->value)
 		ent->client->resp.score = ent->client->pers.score;

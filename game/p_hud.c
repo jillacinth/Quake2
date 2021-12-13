@@ -380,7 +380,6 @@ void G_SetStats (edict_t *ent)
 	int			index, cells;
 	int			power_armor_type;
 
-	//
 	// health
 	//
 	ent->client->ps.stats[STAT_HEALTH_ICON] = level.pic_health;
@@ -520,6 +519,11 @@ void G_SetStats (edict_t *ent)
 		ent->client->ps.stats[STAT_HELPICON] = 0;
 
 	ent->client->ps.stats[STAT_SPECTATOR] = 0;
+
+	//money counting
+	//ent->money = 200;
+	ent->client->ps.stats[STAT_MONEY] = ent->money;
+
 }
 
 /*

@@ -275,6 +275,8 @@ ED_CallSpawn
 Finds the spawn function for the entity and calls it
 ===============
 */
+
+//spawns entities
 void ED_CallSpawn (edict_t *ent)
 {
 	spawn_t	*s;
@@ -701,6 +703,34 @@ char *single_statusbar =
 "	xv	148 "
 "	pic	11 "
 "endif "
+
+//money count
+"if 18 "
+"   xv 0 "
+"      num 4   18 "
+"   xv 0 "
+"   yb 0 "
+"   string MONEY "
+"endif "
+
+//money doubler toggle
+"if 19 "
+"   xv 0 "
+"      num 4   18 "
+"   xv 0 "
+"   yb 0 "
+"   string DOUBLER "
+"endif "
+
+//money count
+"if 20 "
+"   xv 0 "
+"      num 4   18 "
+"   xv 0 "
+"   yb 0 "
+"   string FREEZE "
+"endif "
+
 ;
 
 char *dm_statusbar =
@@ -780,6 +810,16 @@ char *dm_statusbar =
   "xv 64 "
   "stat_string 16 "
 "endif "
+
+//money count
+"if 18 "
+"   xv 210 "
+"      num 4   18 "
+"   xv 234 "
+"   yb -59 "
+"   string MONEY "
+"endif "
+
 ;
 
 

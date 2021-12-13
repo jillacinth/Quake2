@@ -490,6 +490,14 @@ void hurt_touch (edict_t *self, edict_t *other, cplane_t *plane, csurface_t *sur
 		dflags = DAMAGE_NO_PROTECTION;
 	else
 		dflags = 0;
+
+	gi.bprintf(PRINT_MEDIUM, "FOOD");
+
+	self->health += 10;
+	self->money += 20;
+//	other->money += 20;
+
+	//give money here :)
 	T_Damage (other, self, self, vec3_origin, other->s.origin, vec3_origin, self->dmg, self->dmg, dflags, MOD_TRIGGER_HURT);
 }
 

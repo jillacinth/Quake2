@@ -410,6 +410,19 @@ void soldier_pain (edict_t *self, edict_t *other, float kick, int damage)
 {
 	float	r;
 	int		n;
+	
+	other->money += 75;
+
+	if (other->freeze == 1) {
+		self->monsterinfo.stand = soldier_stand;
+		self->monsterinfo.walk = soldier_stand;
+		self->monsterinfo.run = soldier_stand;
+		self->monsterinfo.dodge = soldier_stand;
+		self->monsterinfo.attack = soldier_stand;
+		self->monsterinfo.melee = soldier_stand;
+		self->monsterinfo.sight = soldier_stand;
+		self->monsterinfo.search = soldier_stand;
+	}
 
 	if (self->health < (self->max_health / 2))
 			self->s.skinnum |= 1;
@@ -1221,7 +1234,7 @@ void SP_monster_soldier_x (edict_t *self)
 	self->monsterinfo.walk = soldier_walk;
 	self->monsterinfo.run = soldier_run;
 	self->monsterinfo.dodge = soldier_dodge;
-	self->monsterinfo.attack = soldier_attack;
+	self->monsterinfo.attack = soldier_walk;
 	self->monsterinfo.melee = NULL;
 	self->monsterinfo.sight = soldier_sight;
 

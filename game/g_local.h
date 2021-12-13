@@ -838,6 +838,12 @@ typedef struct
 
 	// values saved and restored from edicts when changing levels
 	int			health;
+
+	int			money;
+
+	int			doubler;
+	int			freeze;
+
 	int			max_health;
 	int			savedFlags;
 
@@ -964,6 +970,7 @@ struct gclient_s
 
 struct edict_s
 {
+
 	entity_state_t	s;
 	struct gclient_s	*client;	// NULL if not a player
 									// the server expects the first part
@@ -1052,6 +1059,13 @@ struct edict_s
 	float		last_move_time;
 
 	int			health;
+
+	//money
+	int			money;
+	
+	int			doubler;
+	int			freeze;
+
 	int			max_health;
 	int			gib_health;
 	int			deadflag;

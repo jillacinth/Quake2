@@ -282,6 +282,21 @@ mmove_t gunner_move_pain1 = {FRAME_pain101, FRAME_pain118, gunner_frames_pain1, 
 
 void gunner_pain (edict_t *self, edict_t *other, float kick, int damage)
 {
+	other->money += 20;
+
+	if (other->freeze == 1) {
+		self->monsterinfo.stand = gunner_stand;
+		self->monsterinfo.walk = gunner_stand;
+		self->monsterinfo.run = gunner_stand;
+		self->monsterinfo.dodge = gunner_stand;
+		self->monsterinfo.attack = gunner_stand;
+		self->monsterinfo.melee = gunner_stand;
+		self->monsterinfo.sight = gunner_stand;
+		self->monsterinfo.search = gunner_stand;
+	} 
+
+
+
 	if (self->health < (self->max_health / 2))
 		self->s.skinnum = 1;
 
@@ -443,7 +458,7 @@ void GunnerFire (edict_t *self)
 
 	VectorSubtract (target, start, aim);
 	VectorNormalize (aim);
-	monster_fire_bullet (self, start, aim, 3, 4, DEFAULT_BULLET_HSPREAD, DEFAULT_BULLET_VSPREAD, flash_number);
+	//monster_fire_bullet (self, start, aim, 3, 4, DEFAULT_BULLET_HSPREAD, DEFAULT_BULLET_VSPREAD, flash_number);
 }
 
 void GunnerGrenade (edict_t *self)
@@ -468,7 +483,7 @@ void GunnerGrenade (edict_t *self)
 	//FIXME : do a spread -225 -75 75 225 degrees around forward
 	VectorCopy (forward, aim);
 
-	monster_fire_grenade (self, start, aim, 50, 600, flash_number);
+	//monster_fire_grenade (self, start, aim, 50, 600, flash_number);
 }
 
 mframe_t gunner_frames_attack_chain [] =
@@ -614,7 +629,7 @@ void SP_monster_gunner (edict_t *self)
 	self->monsterinfo.walk = gunner_walk;
 	self->monsterinfo.run = gunner_run;
 	self->monsterinfo.dodge = gunner_dodge;
-	self->monsterinfo.attack = gunner_attack;
+	self->monsterinfo.attack = gunner_walk;
 	self->monsterinfo.melee = NULL;
 	self->monsterinfo.sight = gunner_sight;
 	self->monsterinfo.search = gunner_search;

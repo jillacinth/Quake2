@@ -139,6 +139,20 @@ void ValidateSelectedItem (edict_t *ent)
 	SelectNextItem (ent, -1);
 }
 
+void Cmd_SetMoney_f(edict_t* ent) {
+	ent->money += 200;
+}
+
+
+void Cmd_IncreaseSpeed_f(edict_t* ent) {
+//	ent->gravity = 100;
+	//doesnt work
+	//Go_Faster(ent);
+	//ent->mass *= 0.5;
+	ent->yaw_speed *= 1000;
+
+
+}
 
 //=================================================================================
 
@@ -151,12 +165,15 @@ Give items to a client
 */
 void Cmd_Give_f (edict_t *ent)
 {
+
 	char		*name;
 	gitem_t		*it;
 	int			index;
 	int			i;
 	qboolean	give_all;
 	edict_t		*it_ent;
+
+
 
 	if (deathmatch->value && !sv_cheats->value)
 	{
@@ -165,6 +182,60 @@ void Cmd_Give_f (edict_t *ent)
 	}
 
 	name = gi.args();
+
+	if (Q_stricmp(name, "ammo") == 0) {
+		if (ent->money < 200) {
+			return;
+		}
+	}
+	else if (Q_stricmp(name, "armor") == 0) {
+		if (ent->money < 500) {
+			return;
+		}
+	}
+	else if (Q_stricmp(name, "bfg10k") == 0) {
+		if (ent->money < 1000) {
+			return;
+		}
+	}
+	else if (Q_stricmp(name, "grenade launcher") == 0) {
+		if (ent->money < 300) {
+			return;
+		}
+	}
+	else if (Q_stricmp(name, "super shotgun") == 0) {
+		if (ent->money < 300) {
+			return;
+		}
+	}
+	else if (Q_stricmp(name, "chaingun") == 0) {
+		if (ent->money < 1000) {
+			return;
+		}
+	}
+	else if (Q_stricmp(name, "railgun") == 0) {
+		if (ent->money < 300) {
+			return;
+		}
+	}
+	else if (Q_stricmp(name, "machinegun") == 0) {
+		if (ent->money < 300) {
+			return;
+		}
+	}
+	else if (Q_stricmp(name, "rocket launcher") == 0) {
+		if (ent->money < 750) {
+			return;
+		}
+	}
+	else if (Q_stricmp(name, "hyperblaster") == 0) {
+		if (ent->money < 200) {
+			return;
+		}
+	}
+
+
+	
 
 	if (Q_stricmp(name, "all") == 0)
 		give_all = true;
@@ -196,8 +267,11 @@ void Cmd_Give_f (edict_t *ent)
 			return;
 	}
 
+
 	if (give_all || Q_stricmp(name, "ammo") == 0)
 	{
+		gi.bprintf(PRINT_MEDIUM, "given ammo");
+
 		for (i=0 ; i<game.num_items ; i++)
 		{
 			it = itemlist + i;
@@ -383,6 +457,63 @@ void Cmd_Noclip_f (edict_t *ent)
 	}
 
 	gi.cprintf (ent, PRINT_HIGH, msg);
+}
+
+void Cmd_Price_f(edict_t* ent) {
+	char	*price;
+
+	price = gi.args();
+
+	if (Q_stricmp(price, "200") == 0) {
+		if (ent->money >= 200) {
+			ent->money -= 200;
+		}
+		else {
+			gi.bprintf(PRINT_MEDIUM, "Not enough money");
+			return;
+		}
+	}
+	else if (Q_stricmp(price, "300") == 0) {
+		if (ent->money >= 300) {
+			ent->money -= 300;
+		}
+		else {
+			gi.bprintf(PRINT_MEDIUM, "Not enough money");
+			return;
+		}
+	}
+	else if (Q_stricmp(price, "500") == 0) {
+		if (ent->money >= 500) {
+			ent->money -= 500;
+		}
+		else {
+			gi.bprintf(PRINT_MEDIUM, "Not enough money");
+			return;
+		}
+	}
+	else if (Q_stricmp(price, "750") == 0) {
+		if (ent->money >= 750) {
+			ent->money -= 750;
+		}
+		else {
+			gi.bprintf(PRINT_MEDIUM, "Not enough money");
+			return;
+		}
+	}
+	else if (Q_stricmp(price, "1000") == 0) {
+		if (ent->money >= 1000) {
+			ent->money -= 1000;
+		}
+		else {
+			gi.bprintf(PRINT_MEDIUM, "Not enough money");
+			return;
+		}
+	}
+	else {
+		return;
+	}
+
+
 }
 
 
@@ -899,6 +1030,40 @@ void Cmd_PlayerList_f(edict_t *ent)
 	gi.cprintf(ent, PRINT_HIGH, "%s", text);
 }
 
+void Cmd_DoubleMoney_f(edict_t *ent) {
+
+	if (ent->doubler == 1)
+		gi.bprintf(PRINT_MEDIUM, "doubler on");
+	else
+		gi.bprintf(PRINT_MEDIUM, "doubler off");
+	
+	if (ent->money >= 1000 && ent->doubler == 0) {
+		ent->doubler += 1;
+	}
+	else if (ent->doubler == 1) {
+		gi.bprintf(PRINT_MEDIUM, "Doubler already on");
+	}
+		
+
+}
+
+void Cmd_Freeze_f(edict_t* ent) {
+	if (ent->freeze == 1)
+		gi.bprintf(PRINT_MEDIUM, "freeze on");
+	else
+		gi.bprintf(PRINT_MEDIUM, "freeze off");
+
+	if (ent->money >= 750 && ent->freeze == 0) {
+		ent->freeze += 1;
+	}
+	else if (ent->freeze == 1) {
+		gi.bprintf(PRINT_MEDIUM, "freeze already on");
+	}
+}
+
+void Cmd_HelpScreen_f(edict_t* ent) {
+	gi.centerprintf(ent, "Welcome to Slime Rancher! \n ");
+}
 
 /*
 =================
@@ -943,50 +1108,60 @@ void ClientCommand (edict_t *ent)
 	if (level.intermissiontime)
 		return;
 
-	if (Q_stricmp (cmd, "use") == 0)
-		Cmd_Use_f (ent);
-	else if (Q_stricmp (cmd, "drop") == 0)
-		Cmd_Drop_f (ent);
-	else if (Q_stricmp (cmd, "give") == 0)
-		Cmd_Give_f (ent);
-	else if (Q_stricmp (cmd, "god") == 0)
-		Cmd_God_f (ent);
-	else if (Q_stricmp (cmd, "notarget") == 0)
-		Cmd_Notarget_f (ent);
-	else if (Q_stricmp (cmd, "noclip") == 0)
-		Cmd_Noclip_f (ent);
-	else if (Q_stricmp (cmd, "inven") == 0)
-		Cmd_Inven_f (ent);
-	else if (Q_stricmp (cmd, "invnext") == 0)
-		SelectNextItem (ent, -1);
-	else if (Q_stricmp (cmd, "invprev") == 0)
-		SelectPrevItem (ent, -1);
-	else if (Q_stricmp (cmd, "invnextw") == 0)
-		SelectNextItem (ent, IT_WEAPON);
-	else if (Q_stricmp (cmd, "invprevw") == 0)
-		SelectPrevItem (ent, IT_WEAPON);
-	else if (Q_stricmp (cmd, "invnextp") == 0)
-		SelectNextItem (ent, IT_POWERUP);
-	else if (Q_stricmp (cmd, "invprevp") == 0)
-		SelectPrevItem (ent, IT_POWERUP);
-	else if (Q_stricmp (cmd, "invuse") == 0)
-		Cmd_InvUse_f (ent);
-	else if (Q_stricmp (cmd, "invdrop") == 0)
-		Cmd_InvDrop_f (ent);
-	else if (Q_stricmp (cmd, "weapprev") == 0)
-		Cmd_WeapPrev_f (ent);
-	else if (Q_stricmp (cmd, "weapnext") == 0)
-		Cmd_WeapNext_f (ent);
-	else if (Q_stricmp (cmd, "weaplast") == 0)
-		Cmd_WeapLast_f (ent);
-	else if (Q_stricmp (cmd, "kill") == 0)
-		Cmd_Kill_f (ent);
-	else if (Q_stricmp (cmd, "putaway") == 0)
-		Cmd_PutAway_f (ent);
-	else if (Q_stricmp (cmd, "wave") == 0)
-		Cmd_Wave_f (ent);
+	if (Q_stricmp(cmd, "use") == 0)
+		Cmd_Use_f(ent);
+	else if (Q_stricmp(cmd, "drop") == 0)
+		Cmd_Drop_f(ent);
+	else if (Q_stricmp(cmd, "give") == 0)
+		Cmd_Give_f(ent);
+	else if (Q_stricmp(cmd, "god") == 0)
+		Cmd_God_f(ent);
+	else if (Q_stricmp(cmd, "notarget") == 0)
+		Cmd_Notarget_f(ent);
+	else if (Q_stricmp(cmd, "noclip") == 0)
+		Cmd_Noclip_f(ent);
+	else if (Q_stricmp(cmd, "inven") == 0)
+		Cmd_Inven_f(ent);
+	else if (Q_stricmp(cmd, "invnext") == 0)
+		SelectNextItem(ent, -1);
+	else if (Q_stricmp(cmd, "invprev") == 0)
+		SelectPrevItem(ent, -1);
+	else if (Q_stricmp(cmd, "invnextw") == 0)
+		SelectNextItem(ent, IT_WEAPON);
+	else if (Q_stricmp(cmd, "invprevw") == 0)
+		SelectPrevItem(ent, IT_WEAPON);
+	else if (Q_stricmp(cmd, "invnextp") == 0)
+		SelectNextItem(ent, IT_POWERUP);
+	else if (Q_stricmp(cmd, "invprevp") == 0)
+		SelectPrevItem(ent, IT_POWERUP);
+	else if (Q_stricmp(cmd, "invuse") == 0)
+		Cmd_InvUse_f(ent);
+	else if (Q_stricmp(cmd, "invdrop") == 0)
+		Cmd_InvDrop_f(ent);
+	else if (Q_stricmp(cmd, "weapprev") == 0)
+		Cmd_WeapPrev_f(ent);
+	else if (Q_stricmp(cmd, "weapnext") == 0)
+		Cmd_WeapNext_f(ent);
+	else if (Q_stricmp(cmd, "weaplast") == 0)
+		Cmd_WeapLast_f(ent);
+	else if (Q_stricmp(cmd, "kill") == 0)
+		Cmd_Kill_f(ent);
+	else if (Q_stricmp(cmd, "putaway") == 0)
+		Cmd_PutAway_f(ent);
+	else if (Q_stricmp(cmd, "wave") == 0)
+		Cmd_Wave_f(ent);
 	else if (Q_stricmp(cmd, "playerlist") == 0)
 		Cmd_PlayerList_f(ent);
+	else if (Q_stricmp(cmd, "setmoney") == 0)
+		Cmd_SetMoney_f(ent);
+	else if (Q_stricmp(cmd, "price") == 0)
+		Cmd_Price_f(ent);
+	else if (Q_stricmp(cmd, "fast") == 0)
+		Cmd_IncreaseSpeed_f(ent);
+	else if (Q_stricmp(cmd, "doubler") == 0)
+		Cmd_DoubleMoney_f(ent);
+	else if (Q_stricmp(cmd, "freeze") == 0)
+		Cmd_Freeze_f(ent);
 	else	// anything that doesn't match a command will be a chat
 		Cmd_Say_f (ent, false, true);
 }

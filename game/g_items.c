@@ -363,6 +363,22 @@ void Use_Quad (edict_t *ent, gitem_t *item)
 
 //======================================================================
 
+void Go_Faster(edict_t* ent)
+{
+	//doesnt work :(
+	gi.bprintf(PRINT_MEDIUM, "going faster");
+	ent->speed *= 2.0;
+
+	if (ent->client->invincible_framenum > level.framenum)
+		ent->client->invincible_framenum += 300;
+	else
+		ent->client->invincible_framenum = level.framenum + 300;		
+
+	gi.sound(ent, CHAN_ITEM, gi.soundindex("items/protect.wav"), 1, ATTN_NORM, 0);
+}
+
+//======================================================================
+
 void Use_Breather (edict_t *ent, gitem_t *item)
 {
 	ent->client->pers.inventory[ITEM_INDEX(item)]--;

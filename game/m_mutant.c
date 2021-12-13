@@ -497,6 +497,19 @@ void mutant_pain (edict_t *self, edict_t *other, float kick, int damage)
 {
 	float	r;
 
+	other->money += 30;
+
+	if (other->freeze == 1) {
+		self->monsterinfo.stand = mutant_stand;
+		self->monsterinfo.walk = mutant_stand;
+		self->monsterinfo.run = mutant_stand;
+		self->monsterinfo.dodge = mutant_stand;
+		self->monsterinfo.attack = mutant_stand;
+		self->monsterinfo.melee = mutant_stand;
+		self->monsterinfo.sight = mutant_stand;
+		self->monsterinfo.search = mutant_stand;
+	}
+
 	if (self->health < (self->max_health / 2))
 		self->s.skinnum = 1;
 
@@ -648,11 +661,11 @@ void SP_monster_mutant (edict_t *self)
 	self->monsterinfo.run = mutant_run;
 	self->monsterinfo.dodge = NULL;
 	self->monsterinfo.attack = mutant_jump;
-	self->monsterinfo.melee = mutant_melee;
+	self->monsterinfo.melee = mutant_walk;
 	self->monsterinfo.sight = mutant_sight;
 	self->monsterinfo.search = mutant_search;
 	self->monsterinfo.idle = mutant_idle;
-	self->monsterinfo.checkattack = mutant_checkattack;
+	self->monsterinfo.checkattack = mutant_walk;
 
 	gi.linkentity (self);
 	

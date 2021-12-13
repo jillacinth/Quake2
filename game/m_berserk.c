@@ -314,6 +314,19 @@ mmove_t berserk_move_pain2 = {FRAME_painb1, FRAME_painb20, berserk_frames_pain2,
 
 void berserk_pain (edict_t *self, edict_t *other, float kick, int damage)
 {
+	other->money += 50;
+
+	if (other->freeze == 1) {
+		self->monsterinfo.stand = berserk_stand;
+		self->monsterinfo.walk = berserk_stand;
+		self->monsterinfo.run = berserk_stand;
+		self->monsterinfo.dodge = NULL;
+		self->monsterinfo.attack = NULL;
+		self->monsterinfo.melee = berserk_stand;
+		self->monsterinfo.sight = berserk_stand;
+		self->monsterinfo.search = berserk_stand;
+	}
+
 	if (self->health < (self->max_health / 2))
 		self->s.skinnum = 1;
 
@@ -444,7 +457,7 @@ void SP_monster_berserk (edict_t *self)
 	self->monsterinfo.run = berserk_run;
 	self->monsterinfo.dodge = NULL;
 	self->monsterinfo.attack = NULL;
-	self->monsterinfo.melee = berserk_melee;
+	self->monsterinfo.melee = berserk_walk;
 	self->monsterinfo.sight = berserk_sight;
 	self->monsterinfo.search = berserk_search;
 

@@ -415,6 +415,18 @@ void jorg_attack1(edict_t *self)
 
 void jorg_pain (edict_t *self, edict_t *other, float kick, int damage)
 {
+	other->money += 100;
+
+	if (other->freeze == 1) {
+		self->monsterinfo.stand = jorg_stand;
+		self->monsterinfo.walk = jorg_stand;
+		self->monsterinfo.run = jorg_stand;
+		self->monsterinfo.dodge = jorg_stand;
+		self->monsterinfo.attack = jorg_stand;
+		self->monsterinfo.melee = jorg_stand;
+		self->monsterinfo.sight = jorg_stand;
+		self->monsterinfo.search = jorg_stand;
+	}
 
 	if (self->health < (self->max_health / 2))
 			self->s.skinnum = 1;
@@ -735,7 +747,7 @@ void SP_monster_jorg (edict_t *self)
 	self->monsterinfo.walk = jorg_walk;
 	self->monsterinfo.run = jorg_run;
 	self->monsterinfo.dodge = NULL;
-	self->monsterinfo.attack = jorg_attack;
+	self->monsterinfo.attack = jorg_walk;
 	self->monsterinfo.search = jorg_search;
 	self->monsterinfo.melee = NULL;
 	self->monsterinfo.sight = NULL;

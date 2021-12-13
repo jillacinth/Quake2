@@ -1009,6 +1009,14 @@ typedef enum
 #define STAT_CHASE				16
 #define STAT_SPECTATOR			17
 
+//money counter
+#define STAT_MONEY				18
+//doubler powerup
+#define STAT_DOUBLER			19
+//monster freeze
+#define STAT_FREEZE				20
+
+
 #define	MAX_STATS				32
 
 
