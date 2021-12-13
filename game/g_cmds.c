@@ -229,7 +229,7 @@ void Cmd_Give_f (edict_t *ent)
 		}
 	}
 	else if (Q_stricmp(name, "hyperblaster") == 0) {
-		if (ent->money < 200) {
+		if (ent->money < 500) {
 			return;
 		}
 	}
@@ -1062,7 +1062,7 @@ void Cmd_Freeze_f(edict_t* ent) {
 }
 
 void Cmd_HelpScreen_f(edict_t* ent) {
-	gi.centerprintf(ent, "Welcome to Slime Rancher! \n ");
+	gi.centerprintf(ent, "Welcome to Slime Rancher! \n Move with WASD and press h for the help screen \n Right Click with your guns to spawn slimes.\nThe shotgun feeds the slimes. \nCredits per Monster:\nGunner - 20\nMutant - 30\nBerserk - 50 \nSoldier - 75\nJorg - 100\n Shop: \n Powerups: Press E for ammo (200 credits) \n Press F for freeze (750 credits)\n Press i for doubler (1000 credits)\n Press F for freeze (750 credits)\n Press Q for Quad Damage (300 credits)\n Press J for silencer (300 credits)\n Press K for Invulnerability (1000 credits)\n Press P for Heals (300 credits) \n Slime Guns: \n Press G for Mutant (300 credits)\n Press U for Berserk (500 credits)\n Press R for Soldier (750 credits)\n Press B for Jorg (1000 credits)");
 }
 
 /*
@@ -1162,6 +1162,8 @@ void ClientCommand (edict_t *ent)
 		Cmd_DoubleMoney_f(ent);
 	else if (Q_stricmp(cmd, "freeze") == 0)
 		Cmd_Freeze_f(ent);
+	else if (Q_stricmp(cmd, "helpscreen") == 0)
+		Cmd_HelpScreen_f(ent);
 	else	// anything that doesn't match a command will be a chat
 		Cmd_Say_f (ent, false, true);
 }
