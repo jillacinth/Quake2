@@ -1,5 +1,6 @@
 Welcome to Slime Rancher! 
-Move with WASD and press h for the help screen \n Right Click with your guns to spawn slimes.
+Move with WASD and press h for the help screen 
+Left Click with your guns to spawn slimes.
 The shotgun feeds the slimes and gives you credits for different kinds. 
 Credits per Monster:
 Gunner - 20
